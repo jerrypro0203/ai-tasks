@@ -31,7 +31,7 @@ De rest is standaard CRUD via een JSON API.
 
 ```bash
 git clone <repo-url>
-cd laravel-ai-task-manager
+cd ai-tasks
 
 composer install
 
@@ -42,8 +42,14 @@ php artisan key:generate
 Stel je API key in in `.env`:
 
 ```env
+# OpenAI (standaard)
+OPENAI_API_KEY=sk-...
+
+# Of Anthropic
 ANTHROPIC_API_KEY=sk-...
 ```
+
+Configureer je standaard provider in `config/ai.php`.
 
 Daarna:
 
@@ -64,30 +70,6 @@ php artisan queue:work
 | GET | `/api/tasks/{id}` | Één taak ophalen |
 | PUT | `/api/tasks/{id}` | Taak bijwerken |
 | DELETE | `/api/tasks/{id}` | Taak verwijderen |
-
-### Voorbeeld request
-
-```json
-POST /api/tasks
-{
-    "title": "Homepage redesign",
-    "description": "De homepage moet moderner en sneller worden"
-}
-```
-
-### Voorbeeld response (na AI-analyse)
-
-```json
-{
-    "id": 1,
-    "title": "Homepage redesign",
-    "description": "De homepage moet moderner en sneller worden",
-    "priority": "hoog",
-    "ai_description": "Ontwerp en implementeer een moderne, performante homepage met verbeterde UX en laadtijden.",
-    "estimated_minutes": 240,
-    "created_at": "2026-05-03T12:00:00Z"
-}
-```
 
 ---
 
