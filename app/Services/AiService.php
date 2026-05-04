@@ -10,9 +10,7 @@ class AiService
     public function analyzeTask(string $title, ?string $description): array
     {
         try {
-            $response = retry(3, function() use ($title, $description) {
-                return (new TaskAnalyzer)->prompt("Analyseer: {$title}. {$description}")->structured;
-            }, 1000);
+            $response = (new TaskAnalyzer)->prompt("Analyseer: {$title}. {$description}")->structured;
 
             return [
                 'priority'          => $response['priority'] ?? 'middel',
