@@ -13,12 +13,11 @@ class AnalyzeTaskJob implements ShouldQueue
 {
     use Queueable;
 
-    // Max 3 pogingen
     public int $tries = 3;
 
     public function __construct(private Task $task) {}
 
-    // Exponential backoff tussen pogingen
+    // Backoff/retries in seconden: 1s, 2s, 4s
     public function backoff(): array
     {
         return [1, 2, 4];
@@ -41,7 +40,6 @@ class AnalyzeTaskJob implements ShouldQueue
         ]);
     }
 
-    // Wordt aangeroepen als alle pogingen mislukken
     public function failed(\Exception $e): void
     {
         $this->task->update(['status' => Status::FAILED]);
